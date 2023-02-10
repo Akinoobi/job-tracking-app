@@ -1,7 +1,8 @@
 
 import logo from '../assets/images/logo.svg'
-export const Logo = () => {
+ const Logo = () => {
   return (
     <img src={logo} alt="job tracking app" className='logo'/>
   )
 }
+export default Logo
