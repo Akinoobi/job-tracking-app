@@ -107,6 +107,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"secretgel\",\r\n    \"email\":\"john@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{URL}}/auth/register",
 							"host": [
@@ -121,7 +130,7 @@
 					"response": []
 				},
 				{
-					"name": "Login",
+					"name": "Login User",
 					"request": {
 						"method": "POST",
 						"header": [],
