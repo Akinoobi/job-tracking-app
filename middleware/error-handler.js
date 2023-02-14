@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 const errorHandlerMiddleware = (err, req, res, next) => {
-  console.log(err.message);
+  console.log(err);
   const defaultError = {
     // [Http Status Codes](https://www.npmjs.com/package/http-status-codes)
 
-    StatusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    StatusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong, try again later.",
   };
   if (err.name === "ValidationError") {
@@ -18,7 +18,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     defaultError.msg = `${Object.keys(err.keyValue)} has to be unique.`
   }
   res.status(defaultError.StatusCode).json({ msg: defaultError.msg });
-//   res.status(defaultError.StatusCode).json({ msg: err });
 
 };
 export default errorHandlerMiddleware;
