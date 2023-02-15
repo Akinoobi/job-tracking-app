@@ -14,8 +14,19 @@ const register = async(req, res) => {
       throw new BadRequestError('Email already in use.')
     }
     const user = await User.create(req.body)
-    user.createJWT()
-    res.status(StatusCodes.OK).json({ user }) // [Http Status Codes](https://www.npmjs.com/package/http-status-codes)
+    const token = user.createJWT()
+    res
+    .status(StatusCodes.OK)
+    .json({ 
+      user: {
+        email: user.email,
+        lastName: user.lastName,
+        location: user.location,
+        name: user.name,
+      },
+      token,
+      location: user.location,
+      }) // [Http Status Codes](https://www.npmjs.com/package/http-status-codes)
 
 };
 const login = (req, res) => {

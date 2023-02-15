@@ -13,13 +13,14 @@ import jobsRouter from './routes/jobsRoutes.js'
 //middleware
 import errorHandlerMiddleware from './middleware/error-handler.js'
 import notFoundMiddleware from './middleware/not-found.js'
-
 app.use(express.json())
 
 app.get('/',(req, res) => {
-    res.send('Welcome!')
+    res.json({msg: 'Welcome!'})
 })
-
+app.get('/api/v1',(req, res) => {
+  res.json({msg: 'API!'})
+})
 app.use('/api/v1/auth',authRouter)
 app.use('/api/v1/jobs',jobsRouter)
 
