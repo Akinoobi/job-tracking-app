@@ -2,7 +2,7 @@ import Wrapper from "../assets/wrappers/RegisterPage";
 import { useEffect, useState } from "react";
 import { FormRow, Logo, Alert } from "../components";
 import { useAppContext } from "../context/appContext";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   name: "",
@@ -12,8 +12,16 @@ const initialState = {
 };
 const Register = () => {
   const [values, setValues] = useState(initialState);
-  const {user, isLoading, showAlert, displayAlert, registerUser } = useAppContext();
-  const navigate = useNavigate()
+  const {
+    user,
+    isLoading,
+    showAlert,
+    displayAlert,
+    registerUser,
+    loginUser,
+    setupUser,
+  } = useAppContext();
+  const navigate = useNavigate();
   // global state and useNavigate
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -23,26 +31,34 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const {name, email, password, isMember} = values
+    const { name, email, password, isMember } = values;
     if (!email || !password || (!isMember && !name)) {
-      displayAlert()
-      return
+      displayAlert();
+      return;
     }
-    const currentUser = {name, email, password}
+    const currentUser = { name, email, password };
     if (isMember) {
-      console.log('already a member');
+      setupUser({
+        currentUser,
+        endpoint: "login",
+        alertText: "Login Successful! Redirecting...",
+      });
     } else {
-      registerUser(currentUser)
+      setupUser({
+        currentUser,
+        endpoint: "register",
+        alertText: "User Created! Redirecting...",
+      });
     }
-    console.log(values)
+    console.log(values);
   };
   useEffect(() => {
     if (user) {
-      setTimeout(() => { 
-        navigate('/')
-      },3000)
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
-  }, [user, navigate])
+  }, [user, navigate]);
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>
