@@ -1,3 +1,5 @@
+import SharedLayout from "./SharedLayout"
+
 const Stats = () => {
     return (
       <h1>Stats</h1>
