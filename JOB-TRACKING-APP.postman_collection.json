@@ -104,12 +104,28 @@
 			"item": [
 				{
 					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.globals.set('token', jsonData.token)\r",
+									"\r",
+									"// Type: Bearer\r",
+									"\r",
+									"// Token: { { token } }"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"password\": \"secretgel\",\r\n    \"email\":\"john@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Admin\",\r\n    \"password\": \"admin1234\",\r\n    \"email\":\"admin@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,9 +147,30 @@
 				},
 				{
 					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.globals.set('token', jsonData.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{URL}}/auth/login",
 							"host": [
@@ -149,6 +186,17 @@
 				},
 				{
 					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [],

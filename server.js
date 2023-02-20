@@ -14,6 +14,7 @@ import jobsRouter from './routes/jobsRoutes.js'
 //middleware
 import errorHandlerMiddleware from './middleware/error-handler.js'
 import notFoundMiddleware from './middleware/not-found.js'
+import authenticateUser from "./middleware/auth.js";
 
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev')) // logger middleware function
 app.use(express.json())
@@ -25,7 +26,7 @@ app.get('/api/v1',(req, res) => {
   res.json({msg: 'API!'})
 })
 app.use('/api/v1/auth',authRouter)
-app.use('/api/v1/jobs',jobsRouter)
+app.use('/api/v1/jobs',authenticateUser, jobsRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
