@@ -50,6 +50,7 @@ const login = async (req, res) => {
   );
 };
 const updateUser = (req, res) => {
+  console.log(req.user);
   res.send("updateUser");
 };
 

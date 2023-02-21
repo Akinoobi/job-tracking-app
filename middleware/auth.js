@@ -1,14 +1,20 @@
+import jwt from "jsonwebtoken";
 import { UnAuthenticatedError } from "../errors/index.js";
 
 const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   console.log(authHeader);
-  if (!authHeader) {
-    // why, well is it 400 or 404?
-    // actually 401
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
     throw new UnAuthenticatedError("Authentication Invalid");
   }
-  next();
+  const token = authHeader.split(" ")[1];
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { userId: payload.userId };
+    next();
+  } catch (error) {
+    throw new UnAuthenticatedError("Authentication Invalid");
+  }
 };
 
 export default auth;
